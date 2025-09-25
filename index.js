@@ -5,7 +5,7 @@ const vendorRoutes = require('./routes/vendorroutes');
 const bodyParser = require('body-parser');
 const firmRoutes = require('./routes/firmroutes');
 const productroutes = require('./routes/productroutes');    
-const path=requirer('path')
+const path=require('path')
 
 require("dotenv").config();
 
