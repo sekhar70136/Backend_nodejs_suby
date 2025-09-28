@@ -32,6 +32,9 @@ app.listen(PORT, () => {
     console.log(`server started and running at ${PORT}`);
 });
 
+app.use('/',(req,res)=>{
+    res.send("<h1>Welcome to suby</h1>")
+})
 app.use('/uploads', express.static('uploads')); // Serve static files from the 'uploads' directory
 
 module.exports = app;
