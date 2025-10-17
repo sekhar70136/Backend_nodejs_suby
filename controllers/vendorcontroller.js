@@ -11,6 +11,7 @@ const secretKey = process.env.JWT_SECRET
 
 const vendorRegister = async(req, res) => {
     const { username, email, password } = req.body;
+    console.log('[vendorRegister] body:', { username, email, password: password ? '***' : null });
     try {
         const vendorEmail = await Vendor.findOne({ email });
        
@@ -38,6 +39,7 @@ const vendorRegister = async(req, res) => {
 
 const vendorLogin = async(req, res) => {
     const { email, password } = req.body;
+    console.log('[vendorLogin] body:', { email, password: password ? '***' : null });
     try {
         const vendor = await Vendor.findOne({ email });
         if (!vendor || !(await bcrypt.compare(password, vendor.password))) {
@@ -50,7 +52,7 @@ const vendorLogin = async(req, res) => {
         res.status(200).json({ success: "Login successful", token, vendorId })
         console.log(email, "this is token", token);
     } catch (error) {
-        console.log(error);
+        console.log('[vendorLogin] error:', error);
         res.status(500).json({ error: "Internal server error" });
     }
 

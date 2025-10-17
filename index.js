@@ -4,7 +4,10 @@ const mongoose = require('mongoose');
 const vendorRoutes = require('./routes/vendorroutes');
 const bodyParser = require('body-parser');
 const firmRoutes = require('./routes/firmroutes');
-const productroutes = require('./routes/productroutes');    
+const productroutes = require('./routes/productroutes');  
+const cors = require('cors');
+
+
 const path=require('path')
 
 require("dotenv").config();
@@ -14,6 +17,7 @@ const app = express()
 const PORT = process.env.PORT || 4000;
 
 dotEnv.config();
+app.use(cors());
 app.use(express.json()); 
 app.use(express.urlencoded({ extended: true }));
 
@@ -27,14 +31,19 @@ app.use('/firm', firmRoutes)
 app.use('/product', productroutes);
 app.use('/uploads',express.static('uploads'));
 
-
-app.listen(PORT, () => {
-    console.log(`server started and running at ${PORT}`);
+// Lightweight health check
+app.get('/ping', (req, res) => {
+    res.status(200).json({ status: 'ok' });
 });
 
 app.use('/',(req,res)=>{
     res.send("<h1>Welcome to suby</h1>")
 })
+app.listen(PORT, () => {
+    console.log(`server started and running at ${PORT}`);
+});
+
+
 app.use('/uploads', express.static('uploads')); // Serve static files from the 'uploads' directory
 
 module.exports = app;
